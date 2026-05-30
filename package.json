@@ -1,0 +1,28 @@
+{
+  "name": "smarn-core-engine",
+  "version": "1.0.0",
+  "description": "SMARN in typescript.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapilsharma432001/smarn-core-engine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kapilsharma432001/smarn-core-engine/issues"
+  },
+  "homepage": "https://github.com/kapilsharma432001/smarn-core-engine#readme",
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}
