@@ -1,21 +1,7 @@
-import {
-  DEFAULT_IMPORTANCE_SCORE,
-  DEFAULT_MEMORY_CATEGORY,
-  DEFAULT_MEMORY_STATUS,
-  IMPORTANCE_SCORES,
-  MEMORY_CATEGORIES,
-  MEMORY_LIMITS,
-  MEMORY_STATUSES
-} from "./constants/memoryConstants";
+import { seedMemories } from "./data/seedMemories";
 
-console.log("Memory categories:", MEMORY_CATEGORIES);
-console.log("Memory statuses:", MEMORY_STATUSES);
-console.log("Importance scores:", IMPORTANCE_SCORES);
+console.log("Total seed memories:", seedMemories.length);
 
-console.log("Defaults:", {
-  category: DEFAULT_MEMORY_CATEGORY,
-  status: DEFAULT_MEMORY_STATUS,
-  importanceScore: DEFAULT_IMPORTANCE_SCORE
-});
-
-console.log("Memory limits:", MEMORY_LIMITS);
+for (const memory of seedMemories) {
+  console.log(`${memory.id} -  Memory: ${memory.title} Status: ${memory.status})`);
+}
