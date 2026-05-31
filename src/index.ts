@@ -1,46 +1,21 @@
-import type {ApiResult} from "./types/api";
-import type { Memory } from "./types/memory";
+import {
+  DEFAULT_IMPORTANCE_SCORE,
+  DEFAULT_MEMORY_CATEGORY,
+  DEFAULT_MEMORY_STATUS,
+  IMPORTANCE_SCORES,
+  MEMORY_CATEGORIES,
+  MEMORY_LIMITS,
+  MEMORY_STATUSES
+} from "./constants/memoryConstants";
 
-const memory: Memory = {
-  id: "mem_1",
-  title: "Learn TypeScript deeply",
-  content: "Build SMARN Core Engine one module at a time.",
-  category: "learning",
-  tags: ["typescript", "smarn", "frontend"],
-  status: "active",
-  importanceScore: 5,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
-};
+console.log("Memory categories:", MEMORY_CATEGORIES);
+console.log("Memory statuses:", MEMORY_STATUSES);
+console.log("Importance scores:", IMPORTANCE_SCORES);
 
-const successResult: ApiResult<Memory> = {
-  success: true,
-  data: memory,
-  meta: {
-    requestId: "req_12345",
-    timestamp: new Date().toISOString()
-  }
-};
+console.log("Defaults:", {
+  category: DEFAULT_MEMORY_CATEGORY,
+  status: DEFAULT_MEMORY_STATUS,
+  importanceScore: DEFAULT_IMPORTANCE_SCORE
+});
 
-const errorResult: ApiResult<Memory> = {
-  success: false,
-  error: {
-    code: "MEMORY_NOT_FOUND",
-    message: "The requested memory was not found.",
-    details: {
-      memoryId: ["The memory with the given ID does not exist."]
-    }
-  }
-};
-
-function printMemoryResult(result: ApiResult<Memory>): void {
-    if (result.success) {
-        console.log("Memory found:", result.data);
-        console.log("Request metadata:", result.meta);
-    } else {
-        console.error("Error:", result.error.message);
-    }
-}
-
-printMemoryResult(successResult);
-printMemoryResult(errorResult);
+console.log("Memory limits:", MEMORY_LIMITS);
