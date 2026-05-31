@@ -18,7 +18,7 @@ export const MEMORY_STATUSES = [
     "active",
     "archived",
     "deleted"
-] as const satisfies readonly MemoryStatus[]; // satisfies means - keep the exact literal values, but verify every item belongs to MemoryStatus type, and readonly means - this array cannot be modified at runtime (no push, pop, etc) - this is important for constants to ensure immutability
+] as const satisfies readonly MemoryStatus[]; // satisfies means - keep the exact literal values, but verify every item belongs to MemoryStatus type, and readonly means - typescript will prevent mutation during development/type checking
 
 export const IMPORTANCE_SCORES = [1, 2, 3, 4, 5] as const satisfies readonly ImportanceScore[];
 
