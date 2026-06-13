@@ -59,9 +59,17 @@ export function paginate<T>(
     };
 } 
 
-export function getPaginationOffset(options: Partial<PaginationOptions>): number{
-    const page = normalizePositiveInteger(options.page, DEFAULT_PAGE);
-    const pageSize = normalizePositiveInteger(options.pageSize, DEFAULT_PAGE_SIZE);
+export function getPaginationOffset(
+  options: Partial<PaginationOptions> = {}
+): number {
+  const page = normalizePositiveInteger(options.page, DEFAULT_PAGE);
 
-    return (page - 1) * pageSize;
+  const requestedPageSize = normalizePositiveInteger(
+    options.pageSize,
+    DEFAULT_PAGE_SIZE
+  );
+
+  const pageSize = Math.min(requestedPageSize, MAX_PAGE_SIZE);
+
+  return (page - 1) * pageSize;
 }

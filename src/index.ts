@@ -1,33 +1,20 @@
-import { searchMemories } from "./services/searchService";
-import { getPaginationOffset, paginate } from "./utils/pagination";
+import { getMemoryAnalytics } from './services/analyticsService';
+import { getTopCategories } from './services/analyticsService';
 
-const searchResult = searchMemories({
-  view: "all",
-  sort: {
-    sortBy: "createdAt",
-    sortDirection: "desc"
-  }
-});
+const analyticsResult = getMemoryAnalytics();
 
-if (!searchResult.success){
-  console.log(searchResult.error.message);
-}else{
-  const paginatedResult = paginate(searchResult.data, { page: 1, pageSize: 10000 });
-
-  console.log("Paginated Result: ");
-  console.log({
-    page: paginatedResult.page,
-    pageSize: paginatedResult.pageSize,
-    totalItems: paginatedResult.totalItems,
-    totalPages: paginatedResult.totalPages,
-    hasNextPage: paginatedResult.hasNextPage,
-    hasPreviousPage: paginatedResult.hasPreviousPage
-  });
-
-  console.log("Data:");
-  for (const memory of paginatedResult.data){
-    console.log(`- ${memory.title}`);
-  }
+if (!analyticsResult.success) {
+  console.log("Analytics error: ", analyticsResult.error.message);
+} else {
+  const analytics = analyticsResult.data;
+  console.log("Memory Analytics: ", analytics);
 }
 
-console.log(getPaginationOffset({ page: 3, pageSize: 20 }));
+const getTopCategoriesResult = getTopCategories(5);
+
+if (!getTopCategoriesResult.success) {
+  console.log("Top categories error: ", getTopCategoriesResult.error.message);
+} else {
+  const topCategories = getTopCategoriesResult.data;
+  console.log("Top Categories: ", topCategories);
+}
