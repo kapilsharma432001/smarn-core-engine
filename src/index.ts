@@ -1,5 +1,5 @@
 import { searchMemories } from "./services/searchService";
-import { paginate } from "./utils/pagination";
+import { getPagintionOffset, paginate } from "./utils/pagination";
 
 const searchResult = searchMemories({
   view: "all",
@@ -30,3 +30,4 @@ if (!searchResult.success){
   }
 }
 
+console.log(getPagintionOffset({ page: 3, pageSize: 20 }));

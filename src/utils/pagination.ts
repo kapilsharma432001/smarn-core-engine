@@ -58,3 +58,10 @@ export function paginate<T>(
         hasPreviousPage: safePage > 1
     };
 } 
+
+export function getPagintionOffset(options: Partial<PaginationOptions>): number{
+    const page = normalizePositiveInteger(options.page, DEFAULT_PAGE);
+    const pageSize = normalizePositiveInteger(options.pageSize, DEFAULT_PAGE_SIZE);
+
+    return (page - 1) * pageSize;
+}
