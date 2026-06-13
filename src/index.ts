@@ -1,48 +1,32 @@
 import { searchMemories } from "./services/searchService";
+import { paginate } from "./utils/pagination";
 
-const learningMemoriesResult = searchMemories({
-  filters: {
-    category: "learning"
-  }
-});
-
-if (learningMemoriesResult.success) {
-  console.log("Learning memories:");
-  for (const memory of learningMemoriesResult.data) {
-    console.log(`- ${memory.title}`);
-  }
-}
-
-const activeTypeScriptMemoriesResult = searchMemories({
-  view: "active",
-  filters: {
-    tags: ["typescript"],
-    searchText: "engine"
-  },
+const searchResult = searchMemories({
+  view: "all",
   sort: {
-    sortBy: "importanceScore",
+    sortBy: "createdAt",
     sortDirection: "desc"
   }
 });
 
-if (activeTypeScriptMemoriesResult.success) {
-  console.log("Active TypeScript engine memories:");
-  for (const memory of activeTypeScriptMemoriesResult.data) {
-    console.log(`- ${memory.title} (${memory.importanceScore})`);
-  }
-}
+if (!searchResult.success){
+  console.log(searchResult.error.message);
+}else{
+  const paginatedResult = paginate(searchResult.data, { page: 1, pageSize: 10000 });
 
-const archivedMemoriesResult = searchMemories({
-  view: "archived",
-  sort: {
-    sortBy: "updatedAt",
-    sortDirection: "desc"
-  }
-});
+  console.log("Paginated Result: ");
+  console.log({
+    page: paginatedResult.page,
+    pageSize: paginatedResult.pageSize,
+    totalItems: paginatedResult.totalItems,
+    totalPages: paginatedResult.totalPages,
+    hasNextPage: paginatedResult.hasNextPage,
+    hasPreviousPage: paginatedResult.hasPreviousPage
+  });
 
-if (archivedMemoriesResult.success) {
-  console.log("Archived memories:");
-  for (const memory of archivedMemoriesResult.data) {
+  console.log("Data:");
+  for (const memory of paginatedResult.data){
     console.log(`- ${memory.title}`);
   }
 }
+
