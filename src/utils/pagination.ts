@@ -59,7 +59,7 @@ export function paginate<T>(
     };
 } 
 
-export function getPagintionOffset(options: Partial<PaginationOptions>): number{
+export function getPaginationOffset(options: Partial<PaginationOptions>): number{
     const page = normalizePositiveInteger(options.page, DEFAULT_PAGE);
     const pageSize = normalizePositiveInteger(options.pageSize, DEFAULT_PAGE_SIZE);
 
