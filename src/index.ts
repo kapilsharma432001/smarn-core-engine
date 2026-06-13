@@ -1,63 +1,48 @@
-import {
-  archiveMemory,
-  createMemory,
-  deleteMemory,
-  getAllMemories,
-  getMemoryById,
-  updateMemory
-} from "./services/memoryService";
+import { searchMemories } from "./services/searchService";
 
-const allMemoriesResult = getAllMemories();
-
-if (allMemoriesResult.success) {
-  console.log("Total Memories:", allMemoriesResult.data.length);
-};
-
-const singleMemoryResult = getMemoryById("mem_1");
-
-if (singleMemoryResult.success) {
-  console.log("Memory Details:", singleMemoryResult.data.title);
-}
-else {
-  console.error("Error fetching memory:", singleMemoryResult.error.message);
-}
-
-const createResult = createMemory({
-  title: "Practice TypeScript services",
-  content: "Build memory service functions with ApiResult pattern.",
-  category: "learning",
-  tags: ["typescript", "service-layer"],
-  importanceScore: 4
+const learningMemoriesResult = searchMemories({
+  filters: {
+    category: "learning"
+  }
 });
 
-if (createResult.success) {
-  console.log("Created memory:", createResult.data.title);
+if (learningMemoriesResult.success) {
+  console.log("Learning memories:");
+  for (const memory of learningMemoriesResult.data) {
+    console.log(`- ${memory.title}`);
+  }
 }
 
-const updateResult = updateMemory("mem_1", {
-  title: "Learn TypeScript deeply - updated"
+const activeTypeScriptMemoriesResult = searchMemories({
+  view: "active",
+  filters: {
+    tags: ["typescript"],
+    searchText: "engine"
+  },
+  sort: {
+    sortBy: "importanceScore",
+    sortDirection: "desc"
+  }
 });
 
-if (updateResult.success) {
-  console.log("Updated memory:", updateResult.data.title);
+if (activeTypeScriptMemoriesResult.success) {
+  console.log("Active TypeScript engine memories:");
+  for (const memory of activeTypeScriptMemoriesResult.data) {
+    console.log(`- ${memory.title} (${memory.importanceScore})`);
+  }
 }
 
-const archiveResult = archiveMemory("mem_2");
+const archivedMemoriesResult = searchMemories({
+  view: "archived",
+  sort: {
+    sortBy: "updatedAt",
+    sortDirection: "desc"
+  }
+});
 
-if (archiveResult.success) {
-  console.log("Archived memory:", archiveResult.data.id);
+if (archivedMemoriesResult.success) {
+  console.log("Archived memories:");
+  for (const memory of archivedMemoriesResult.data) {
+    console.log(`- ${memory.title}`);
+  }
 }
-
-const deleteResult = deleteMemory("mem_3");
-
-if (deleteResult.success) {
-  console.log("Deleted memory:", deleteResult.data.id);
-}
-
-const missingResult = getMemoryById("wrong_id");
-
-if (!missingResult.success) {
-  console.log("Expected error:", missingResult.error.message);
-}
-
-
